@@ -1,3 +1,4 @@
+let modalQt = 5; // variavel para armazenar quantidade de pizza
 const c = (el) => document.querySelector(el);
 const cs = (el) => document.querySelectorAll(el);
 pizzaJson.map((item, index) => {
@@ -13,9 +14,23 @@ pizzaJson.map((item, index) => {
   pizzaItem.querySelector("a").addEventListener("click", (e) => {
     e.preventDefault(); // previna o comportamento padrão
     let key = e.target.closest(".pizza-item").getAttribute("data-key"); // ache o elemento .pizza-item e pegue o atributo data-key
-    c(".pizzaBig img").src = pizzaJson[key].img;  // em '.pizzaInfo img' inseir imagem da pizza
+    modalQt = 1;
+    c(".pizzaBig img").src = pizzaJson[key].img; // em '.pizzaInfo img' inseir imagem da pizza
     c(".pizzaInfo h1").innerHTML = pizzaJson[key].name; // em '.pizzaInfo h1' inseir o nome da pizza
     c(".pizzaInfo--desc").innerHTML = pizzaJson[key].description; //em '.pizzaInfo--desc' inseir a descrição da pizza
+    c(".pizzaInfo--actualPrice").innerHTML = `R$ ${pizzaJson[key].price.toFixed(
+      2
+    )}`; // adiciona o preço da pizza selecionada no modal
+    c(".pizzaInfo--size.selected").classList.remove("selected"); // remove a classe selected do elemento
+    cs(".pizzaInfo--size").forEach((size, sizeIndex) => {
+      if (sizeIndex == 2) {
+        size.classList.add("selected"); // se o elemento sizeIndex for igual 2 adiciona a classe selected
+      }
+
+      size.querySelector("span").innerHTML = pizzaJson[key].sizes[sizeIndex]; // preencher no modal o peso das pizzas
+    });
+
+    c(".pizzaInfo--qt").innerHTML = modalQt;
 
     c(".pizzaWindowArea").style.opacity = "0"; // seleciona o elemento .pizzaWindowArea adiciona visibilidade 0
     c(".pizzaWindowArea").style.display = "flex"; // seleciona o elemento .pizzaWindowArea mostra ne tela
