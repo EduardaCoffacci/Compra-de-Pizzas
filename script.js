@@ -1,6 +1,8 @@
-let modalQt = 5; // variavel para armazenar quantidade de pizza
+let modalQt = 1; // variavel para armazenar quantidade de pizza
 const c = (el) => document.querySelector(el);
 const cs = (el) => document.querySelectorAll(el);
+
+// Liastagem das pizzas
 pizzaJson.map((item, index) => {
   let pizzaItem = c(".models .pizza-item").cloneNode(true); // clonando o item e tudo que tem dentro dele
 
@@ -11,6 +13,8 @@ pizzaJson.map((item, index) => {
   ).innerHTML = `R$ ${item.price.toFixed(2)}`; // dentro de pizzaItem seleciona o preço e substitui por item.price toFixed método para
   pizzaItem.querySelector(".pizza-item--name").innerHTML = item.name; // dentro de pizzaItem seleciona o nome e substitui por item.name
   pizzaItem.querySelector(".pizza-item--desc").innerHTML = item.description; // dentro de pizzaItem seleciona a descrição e substitui por item.descrição
+
+  //Evento de click para abrir o modal
   pizzaItem.querySelector("a").addEventListener("click", (e) => {
     e.preventDefault(); // previna o comportamento padrão
     let key = e.target.closest(".pizza-item").getAttribute("data-key"); // ache o elemento .pizza-item e pegue o atributo data-key
@@ -42,4 +46,15 @@ pizzaJson.map((item, index) => {
   //preencher as informaçoes em pizzaitem
 
   c(".pizza-area").append(pizzaItem); // vai pegar o conteudo que tem em .pizza-area e vai adiconar adicionar mais um conteudo
+});
+
+// Eventos do modal
+function closeModal() {
+  c(".pizzaWindowArea").style.opacity = 0;
+  setTimeout(() => {
+    c(".pizzaWindowArea").style.display = "none";
+  }, 500);
+}
+cs(".pizzaWindowArea, .pizzaInfo--cancelMobileButton").forEach((item) => {
+  item.addEventListener("click", closeModal);
 });
